@@ -9,6 +9,16 @@ const config: Types.Core.GameConfig = {
 	height: 600,
 	parent: 'game-container',
 	backgroundColor: '#028af8',
+	physics: {
+		default: 'arcade',
+		arcade: {
+			gravity: {
+				y: 300,
+				x: 0,
+			},
+			debug: false,
+		},
+	},
 	scale: {
 		mode: Scale.FIT,
 		autoCenter: Scale.CENTER_BOTH,
