@@ -69,12 +69,15 @@ export class Game extends Scene {
 
 	update(): void {
 		if (!this.player || !this.input.keyboard) return;
-		const kb = this.input.keyboard.createCursorKeys();
 
-		if (kb.left.isDown) {
+		const kb = this.input.keyboard.createCursorKeys();
+		const a = this.input.keyboard.addKey('A');
+		const d = this.input.keyboard.addKey('D');
+
+		if (kb.left.isDown || a.isDown) {
 			this.player.setVelocityX(-HORIZONTAL_VELOCITY);
 			this.player.anims.play('left', true);
-		} else if (kb.right.isDown) {
+		} else if (kb.right.isDown || d.isDown) {
 			this.player.setVelocityX(HORIZONTAL_VELOCITY);
 			this.player.anims.play('right', true);
 		} else {
