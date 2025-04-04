@@ -13,7 +13,7 @@ const config: Types.Core.GameConfig = {
 		default: 'arcade',
 		arcade: {
 			gravity: {
-				y: 300,
+				y: 500,
 				x: 0,
 			},
 			debug: false,
