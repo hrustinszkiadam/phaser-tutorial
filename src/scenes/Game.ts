@@ -5,15 +5,29 @@ import {
 	PLAYER_BOUNCE,
 } from '../lib/constants';
 
+type Player = Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+type Platforms = Phaser.Physics.Arcade.StaticGroup;
+type Keyboard = Phaser.Types.Input.Keyboard.CursorKeys;
+type AKey = Phaser.Input.Keyboard.Key;
+type DKey = Phaser.Input.Keyboard.Key;
+
 export class Game extends Scene {
-	platforms: Phaser.Physics.Arcade.StaticGroup;
-	player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
-	kb: Phaser.Types.Input.Keyboard.CursorKeys;
-	aKey: Phaser.Input.Keyboard.Key;
-	dKey: Phaser.Input.Keyboard.Key;
+	private player: Player;
+	private platforms: Platforms;
+	private kb: Keyboard;
+	private aKey: AKey;
+	private dKey: DKey;
 
 	constructor() {
 		super('Game');
+	}
+
+	init() {
+		if (!this.input.keyboard) return;
+
+		this.kb = this.input.keyboard.createCursorKeys();
+		this.aKey = this.input.keyboard.addKey('A');
+		this.dKey = this.input.keyboard.addKey('D');
 	}
 
 	preload() {
@@ -68,12 +82,6 @@ export class Game extends Scene {
 		});
 
 		this.player.anims.play('idle');
-
-		if (!this.input.keyboard) return;
-
-		this.kb = this.input.keyboard.createCursorKeys();
-		this.aKey = this.input.keyboard.addKey('A');
-		this.dKey = this.input.keyboard.addKey('D');
 	}
 
 	update(): void {
