@@ -8,6 +8,9 @@ import {
 export class Game extends Scene {
 	platforms: Phaser.Physics.Arcade.StaticGroup;
 	player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+	kb: Phaser.Types.Input.Keyboard.CursorKeys;
+	aKey: Phaser.Input.Keyboard.Key;
+	dKey: Phaser.Input.Keyboard.Key;
 
 	constructor() {
 		super('Game');
@@ -65,19 +68,21 @@ export class Game extends Scene {
 		});
 
 		this.player.anims.play('idle');
+
+		if (!this.input.keyboard) return;
+
+		this.kb = this.input.keyboard.createCursorKeys();
+		this.aKey = this.input.keyboard.addKey('A');
+		this.dKey = this.input.keyboard.addKey('D');
 	}
 
 	update(): void {
-		if (!this.player || !this.input.keyboard) return;
+		if (!this.player || !this.kb || !this.aKey || !this.dKey) return;
 
-		const kb = this.input.keyboard.createCursorKeys();
-		const a = this.input.keyboard.addKey('A');
-		const d = this.input.keyboard.addKey('D');
-
-		if (kb.left.isDown || a.isDown) {
+		if (this.kb.left.isDown || this.aKey.isDown) {
 			this.player.setVelocityX(-HORIZONTAL_VELOCITY);
 			this.player.anims.play('left', true);
-		} else if (kb.right.isDown || d.isDown) {
+		} else if (this.kb.right.isDown || this.dKey.isDown) {
 			this.player.setVelocityX(HORIZONTAL_VELOCITY);
 			this.player.anims.play('right', true);
 		} else {
@@ -86,8 +91,8 @@ export class Game extends Scene {
 		}
 
 		if (
-			(kb.up.isDown && this.player.body.touching.down) ||
-			(kb.space.isDown && this.player.body.touching.down)
+			(this.kb.up.isDown && this.player.body.touching.down) ||
+			(this.kb.space.isDown && this.player.body.touching.down)
 		) {
 			this.player.setVelocityY(JUMP_VELOCITY);
 		}
