@@ -138,7 +138,7 @@ export class Game extends Scene {
 		});
 		this.stars.children.iterate((star) => {
 			(star as Phaser.Physics.Arcade.Sprite).setBounceY(
-				Phaser.Math.FloatBetween(0.25, 0.5)
+				Phaser.Math.FloatBetween(0.2, 0.4)
 			);
 			return true;
 		});
